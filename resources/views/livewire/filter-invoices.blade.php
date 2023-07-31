@@ -1,5 +1,5 @@
 <div class="bg-gray-100">
-    @dump($filters) {{-- Ver los filtros que se están enviando con livewire --}}
+    {{-- @dump($filters) --}} {{-- Ver los filtros que se están enviando con livewire --}}
 
     {{-- Filtros --}}
     <div class="bg-white rounded p-8 shadow mb-6">
@@ -35,7 +35,7 @@
             </div>
         </div>
         
-        <x-button>GENERAR REPORTE</x-button>
+        <x-button wire:click="generateReport">GENERAR REPORTE</x-button>
     </div>
 
     {{-- Tabla --}}
