@@ -10,6 +10,14 @@ class FilterInvoices extends Component
 {
     use WithPagination;
 
+    public $filters = [
+        'serie' => '',
+        'fromNumber' => '',
+        'toNumber' => '',
+        'fromDate' => '',
+        'toDate' => '',
+    ];
+
     public function render()
     {
         $invoices = Invoice::paginate(10);

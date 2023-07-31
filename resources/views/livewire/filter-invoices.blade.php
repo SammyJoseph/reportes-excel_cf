@@ -1,7 +1,47 @@
-<div>
-    <div class="flex flex-col">
+<div class="bg-gray-100">
+    {{-- @dump($filters) --}} {{-- Ver los filtros que se están enviando con livewire --}}
+
+    {{-- Filtros --}}
+    <div class="bg-white rounded p-8 shadow mb-6">
+        <h3 class="text-2xl font-semibold mb-4">Generar reportes</h3>
+        <div class="flex space-x-24 mb-8">
+            <div class="">
+                <p class="text-sm mb-1 text-gray-500">Serie</p>
+                <select wire:model="filters.serie" name="serie" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-24">
+                    <option value="">Todas</option>
+                    <option value="F001">F001</option>
+                    <option value="B001">B001</option>
+                </select>
+            </div>
+            <div class="flex space-x-4">
+                <div>
+                    <p class="text-sm mb-1 text-gray-500">Desde el N°</p>                    
+                    <x-input wire:model="filters.fromNumber" type="text" class="w-20" />
+                </div>
+                <div>
+                    <p class="text-sm mb-1 text-gray-500">Hasta el N°</p>                 
+                    <x-input wire:model="filters.toNumber" type="text" class="w-20" />
+                </div>
+            </div>
+            <div class="flex space-x-4">
+                <div>
+                    <p class="text-sm mb-1 text-gray-500">Desde la fecha</p>
+                    <x-input wire:model="filters.fromDate" type="date" class="w-36" />
+                </div>
+                <div>
+                    <p class="text-sm mb-1 text-gray-500">Hasta la fecha</p>
+                    <x-input wire:model="filters.toDate" type="date" class="w-36" />
+                </div>
+            </div>
+        </div>
+        
+        <x-button>GENERAR REPORTE</x-button>
+    </div>
+
+    {{-- Tabla --}}
+    <div class="bg-white flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div class="inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="overflow-hidden">
                     <table class="min-w-full text-center text-sm font-light">
                         <thead class="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
@@ -34,7 +74,8 @@
         </div>
     </div>
 
-    <div class="m-4">
+    {{-- Paginación --}}
+    <div class="bg-white p-4">
         {{ $invoices->links() }}
     </div>
 </div>
