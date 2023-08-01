@@ -8,11 +8,12 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting
+class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings
 {
     use Exportable;
 
@@ -36,7 +37,7 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
 
     public function startCell(): string
     {
-        return 'A10';
+        return 'A1';
     }
 
     public function map($invoice): array
@@ -56,6 +57,19 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
     {
         return [
             'G' => 'dd/mm/yyyy hh:mm:ss', // formato de fecha para mostrar en Excel en la columna G
+        ];
+    }
+
+    public function headings(): array
+    {
+        return [
+            'Serie',
+            'Correlativo',
+            'Base',
+            'IGV',
+            'Total',
+            'Usuario',
+            'Fecha de Creación',
         ];
     }
 }
