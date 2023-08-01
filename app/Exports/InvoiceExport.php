@@ -12,10 +12,11 @@ use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings, WithColumnWidths
+class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings, WithColumnWidths, WithDrawings
 {
     use Exportable;
 
@@ -39,7 +40,7 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
 
     public function startCell(): string
     {
-        return 'A1';
+        return 'A10'; // empieza desde esta celda
     }
 
     public function map($invoice): array
@@ -86,5 +87,17 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
             'F' => 30,
             'G' => 25,
         ];
+    }
+
+    public function drawings()
+    {
+        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing->setName('Accounting Company');
+        $drawing->setDescription('Logo');
+        $drawing->setPath(public_path('images/logos/accounting-logo.jpg'));
+        $drawing->setHeight(150);
+        $drawing->setCoordinates('A1');
+
+        return $drawing;
     }
 }
