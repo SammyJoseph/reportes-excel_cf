@@ -18,7 +18,7 @@ use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings, WithColumnWidths, WithDrawings, WithStyles
+class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
 {
     use Exportable;
 
@@ -78,7 +78,7 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
         ];
     }
 
-    public function columnWidths(): array
+    /* public function columnWidths(): array
     {
         return [
             'A' => 10,
@@ -89,7 +89,7 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
             'F' => 30,
             'G' => 25,
         ];
-    }
+    } */
 
     public function drawings()
     {
@@ -108,5 +108,22 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
         $sheet->setTitle('Facturas'); // nombre de la hoja de cálculo (no del archivo)
         $sheet->mergeCells('A1:C8'); // combina celdas
         $sheet->setCellValue('G1', 'Reporte de Facturas'); // escribe en la celda, se puede usar fórmulas (=5+4)
+
+        /* Estilos para las celdas A10:G10 */
+        $sheet->getStyle('A10:G10')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'name' => 'Arial',
+            ],
+            'alignment' => [
+                'horizontal' => 'right',
+            ],
+            'fill' => [
+                'fillType' => 'solid',
+                'color' => [
+                    'argb' => 'FF00FF00',
+                ],
+            ],
+        ]);
     }
 }
