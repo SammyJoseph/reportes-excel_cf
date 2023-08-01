@@ -6,7 +6,6 @@ use App\Exports\InvoiceExport;
 use App\Models\Invoice;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Maatwebsite\Excel\Facades\Excel;
 
 class FilterInvoices extends Component
 {
@@ -28,7 +27,6 @@ class FilterInvoices extends Component
     }
 
     public function generateReport(){
-        // return Excel::download(new InvoiceExport(), 'invoices.xlsx');
-        return Excel::download(new InvoiceExport(), 'invoices.csv', \Maatwebsite\Excel\Excel::CSV);
+        return (new InvoiceExport())->download(); // se puede omitir ->download() y usar Responsable en el modelo InvoiceExport
     }
 }
