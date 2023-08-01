@@ -27,6 +27,6 @@ class FilterInvoices extends Component
     }
 
     public function generateReport(){
-        return (new InvoiceExport())->download(); // se puede omitir ->download() y usar Responsable en el modelo InvoiceExport
+        return (new InvoiceExport($this->filters))->download(); // se puede omitir ->download() y usar Responsable en el modelo InvoiceExport
     }
 }
