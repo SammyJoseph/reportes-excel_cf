@@ -6,6 +6,8 @@ use App\Models\Invoice;
 // use Illuminate\Contracts\Support\Responsable; // se puede usar en lugar de ->download() en el controlador
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize; // para autoajustar el ancho de las columnas
+use Maatwebsite\Excel\Concerns\WithColumnWidths; // para ajustar el ancho de las columnas manualmente
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -13,7 +15,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings
+class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings, WithColumnWidths
 {
     use Exportable;
 
@@ -70,6 +72,19 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
             'Total',
             'Usuario',
             'Fecha de Creación',
+        ];
+    }
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 10,
+            'B' => 10,
+            'C' => 10,
+            'D' => 10,
+            'E' => 10,
+            'F' => 30,
+            'G' => 25,
         ];
     }
 }
