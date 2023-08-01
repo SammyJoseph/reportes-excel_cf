@@ -13,10 +13,12 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithDrawings;
+use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings, WithColumnWidths, WithDrawings
+class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping, WithColumnFormatting, WithHeadings, WithColumnWidths, WithDrawings, WithStyles
 {
     use Exportable;
 
@@ -99,5 +101,12 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
         $drawing->setCoordinates('A1');
 
         return $drawing;
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        $sheet->setTitle('Facturas'); // nombre de la hoja de cálculo (no del archivo)
+        $sheet->mergeCells('A1:C8'); // combina celdas
+        $sheet->setCellValue('G1', 'Reporte de Facturas'); // escribe en la celda, se puede usar fórmulas (=5+4)
     }
 }
