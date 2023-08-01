@@ -109,8 +109,8 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
         $sheet->mergeCells('A1:C8'); // combina celdas
         $sheet->setCellValue('G1', 'Reporte de Facturas'); // escribe en la celda, se puede usar fórmulas (=5+4)
 
-        /* Estilos para las celdas A10:G10 */
-        $sheet->getStyle('A10:G10')->applyFromArray([
+        /* Estilos - Método 1 */
+        /* $sheet->getStyle('B10:G10')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'name' => 'Arial',
@@ -125,5 +125,52 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
                 ],
             ],
         ]);
+
+        $sheet->getStyle('A10:G' . $sheet->getHighestRow())->applyFromArray([ // getHighestRow() devuelve el número de la última fila
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => 'thin',
+                    'color' => [
+                        'argb' => 'FF000000',
+                    ],
+                ],
+            ],
+        ]);
+
+        $sheet->getStyle('A11')->applyFromArray([ // getHighestRow() devuelve el número de la última fila
+            // truco para quitar el cuadro de selección y enfocar la celda A11
+        ]); */
+
+        /* Estilos - Método 2 */
+        return [
+            'B10:G10' => [
+                'font' => [
+                    'bold' => true,
+                    'name' => 'Arial',
+                ],
+                'alignment' => [
+                    'horizontal' => 'right',
+                ],
+                'fill' => [
+                    'fillType' => 'solid',
+                    'color' => [
+                        'argb' => 'FF00FF00',
+                    ],
+                ],
+            ],
+            'A10:G' . $sheet->getHighestRow() => [
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => 'thin',
+                        'color' => [
+                            'argb' => 'FF000000',
+                        ],
+                    ],
+                ],
+            ],
+            'A11' => [
+                // truco para quitar el cuadro de selección y enfocar la celda A11
+            ],
+        ];    
     }
 }
