@@ -107,7 +107,7 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
     {
         $sheet->setTitle('Facturas'); // nombre de la hoja de cálculo (no del archivo)
         $sheet->mergeCells('A1:C8'); // combina celdas
-        $sheet->setCellValue('G1', 'Reporte de Facturas'); // escribe en la celda, se puede usar fórmulas (=5+4)
+        // $sheet->setCellValue('G1', 'Reporte de Facturas'); // escribe en la celda, se puede usar fórmulas (=5+4)
 
         /* Estilos - Método 1 */
         /* $sheet->getStyle('B10:G10')->applyFromArray([
@@ -143,7 +143,7 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
 
         /* Estilos - Método 2 */
         return [
-            'B10:G10' => [
+            'A10:G10' => [
                 'font' => [
                     'bold' => true,
                     'name' => 'Arial',

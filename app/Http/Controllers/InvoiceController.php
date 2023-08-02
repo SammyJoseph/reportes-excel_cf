@@ -15,4 +15,10 @@ class InvoiceController extends Controller
     {
         return view('invoices.import');
     }
+
+    public function importStore(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+    }
 }
