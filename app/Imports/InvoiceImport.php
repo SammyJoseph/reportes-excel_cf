@@ -6,16 +6,20 @@ use App\Models\Invoice;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
+use Maatwebsite\Excel\Concerns\WithGroupedHeadingRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class InvoiceImport implements ToModel
+class InvoiceImport implements ToCollection, WithGroupedHeadingRow, WithCustomCsvSettings
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
+    
+    /* Se puede usar ToModel para crear un registro en la base de datos */
+    /* public function model(array $row)
     {
         return new Invoice([
             'user_id' => 1,
@@ -26,9 +30,10 @@ class InvoiceImport implements ToModel
             'date' => Carbon::instance(Date::excelToDateTimeObject($row[6])), // cuando el formato de fecha en la columna excel es fecha
             // 'date' => Carbon::createFromFormat('d/m/Y' ,$row[6]), // cuando el formato de fecha en la columna excel es texto
         ]);
-    }
+    } */
 
-    /* public function collection($rows)
+    /* O se puede usar ToCollection para realizar más acciones */
+    public function collection($rows)
     {
         foreach ($rows as $row) {
             $invoice = Invoice::create([
@@ -37,13 +42,21 @@ class InvoiceImport implements ToModel
                 'base' => $row[2],
                 'igv' => $row[3],
                 'total' => $row[4],
-                'date' => Carbon::instance(Date::excelToDateTimeObject($row[6])),
+                'date' => Carbon::instance(Date::excelToDateTimeObject($row[6])), // cuando el formato de fecha en la columna excel es fecha
             ]);
 
             // Ejemplo de como se usaría ToCollection para crear un registro en otra tabla
-            Compras::create([
+            /* Compras::create([
                 'invoice_id'    => $invoice->id,                
-            ]);
+            ]); */
         }
-    } */
+    }
+
+    public function getCsvSettings(): array
+    {
+        return [
+            'input_encoding' => 'UTF-8', // especifica la codificación de caracteres de la entrada
+            'delimiter' => ';' // especifica el delimitador de columnas
+        ];
+    }
 }
