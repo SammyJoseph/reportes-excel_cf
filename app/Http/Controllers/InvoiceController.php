@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class InvoiceController extends Controller
 {
     public function export()
-    {
+    {           
         return view('invoices.export');
     }
 
@@ -28,6 +28,6 @@ class InvoiceController extends Controller
         // return Excel::toCollection(new InvoiceImport, $file); // retorna la colección de datos
         Excel::import(new InvoiceImport, $file); // importa a la base de datos
 
-        return "Se importó a la base de datos";
+        return back()->with('imported', 'Se importó con éxito a la base de datos');
     }
 }

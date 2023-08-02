@@ -9,7 +9,11 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['serie', 'correlative', 'base', 'igv', 'total', 'user_id', 'created_at'];
+    protected $casts = [ // $casts es un array que contiene los atributos que queremos convertir a un tipo de dato específico
+        'date' => 'datetime', // para que la columna date se convierta en un objeto Carbon
+    ];
+
+    protected $fillable = ['serie', 'correlative', 'base', 'igv', 'total', 'user_id', 'date'];    
 
     // Query Scopes
     public function scopeFilter($query, $filters)
@@ -17,8 +21,8 @@ class Invoice extends Model
         $query->when($filters['serie'] ?? false, fn($query, $serie) => $query->where('serie', $serie))
             ->when($filters['fromNumber'] ?? false, fn($query, $fromNumber) => $query->where('correlative', '>=', $fromNumber))
             ->when($filters['toNumber'] ?? false, fn($query, $toNumber) => $query->where('correlative', '<=', $toNumber))
-            ->when($filters['fromDate'] ?? false, fn($query, $fromDate) => $query->where('created_at', '>=', $fromDate))
-            ->when($filters['toDate'] ?? false, fn($query, $toDate) => $query->where('created_at', '<=', $toDate));
+            ->when($filters['fromDate'] ?? false, fn($query, $fromDate) => $query->where('date', '>=', $fromDate))
+            ->when($filters['toDate'] ?? false, fn($query, $toDate) => $query->where('date', '<=', $toDate));
     }
 
     public function user()

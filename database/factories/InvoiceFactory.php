@@ -27,6 +27,8 @@ class InvoiceFactory extends Factory
             'igv' => $igv,
             'total' => $total,
             'user_id' => User::all()->random()->id,
+            // 'date' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d H:i:s'), // no es necesario formatear la fecha o lo guardará como un string
+            'date' => $this->faker->dateTimeBetween('-1 year', 'now'), // se debe convertir en el modelo Invoice usando $casts
         ];
     }
 }

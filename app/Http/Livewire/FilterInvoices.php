@@ -27,6 +27,11 @@ class FilterInvoices extends Component
     }
 
     public function generateReport(){
+        session()->flash('exported', 'Se exportó con éxito a la base de datos');
         return (new InvoiceExport($this->filters))->download(); // se puede omitir ->download() y usar Responsable en el modelo InvoiceExport
+    }
+
+    public function clearFilters(){
+        $this->reset('filters');
     }
 }

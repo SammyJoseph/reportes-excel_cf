@@ -22,8 +22,8 @@ class InvoiceImport implements ToModel
             'base' => $row[2],
             'igv' => $row[3],
             'total' => $row[4],
-            'created_at' => Carbon::instance(Date::excelToDateTimeObject($row[6])), // cuando el formato de fecha en la columna excel es fecha
-            // 'created_at' => Carbon::createFromFormat('d/m/Y' ,$row[6]), // cuando el formato de fecha en la columna excel es texto
+            'date' => Carbon::instance(Date::excelToDateTimeObject($row[6])), // cuando el formato de fecha en la columna excel es fecha
+            // 'date' => Carbon::createFromFormat('d/m/Y' ,$row[6]), // cuando el formato de fecha en la columna excel es texto
         ]);
     }
 }

@@ -54,7 +54,7 @@ class InvoiceExport implements FromCollection, WithCustomStartCell, WithMapping,
             $invoice->igv,
             $invoice->total,
             $invoice->user->name,
-            Date::dateTimeToExcel($invoice->created_at), // formato de fecha para el campo created_at
+            Date::dateTimeToExcel($invoice->date), // formato de fecha para el campo date
         ];
     }
 

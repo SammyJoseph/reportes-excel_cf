@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('base');
             $table->float('igv');
             $table->float('total');
+            $table->dateTime('date');
 
             $table->foreignId('user_id')->constrained();
 
