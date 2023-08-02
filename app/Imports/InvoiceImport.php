@@ -3,7 +3,9 @@
 namespace App\Imports;
 
 use App\Models\Invoice;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class InvoiceImport implements ToModel
 {
@@ -20,6 +22,8 @@ class InvoiceImport implements ToModel
             'base' => $row[2],
             'igv' => $row[3],
             'total' => $row[4],
+            'created_at' => Carbon::instance(Date::excelToDateTimeObject($row[6])), // cuando el formato de fecha en la columna excel es fecha
+            // 'created_at' => Carbon::createFromFormat('d/m/Y' ,$row[6]), // cuando el formato de fecha en la columna excel es texto
         ]);
     }
 }

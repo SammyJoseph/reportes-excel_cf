@@ -18,14 +18,15 @@ class InvoiceController extends Controller
         return view('invoices.import');
     }
 
-    public function importStore(Request $request){
+    public function importStore(Request $request){      
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv'
         ]);
 
         $file = $request->file('file');
 
-        Excel::import(new InvoiceImport, $file);
+        // return Excel::toCollection(new InvoiceImport, $file); // retorna la colección de datos
+        Excel::import(new InvoiceImport, $file); // importa a la base de datos
 
         return "Se importó a la base de datos";
     }
